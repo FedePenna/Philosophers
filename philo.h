@@ -38,7 +38,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	dead_mutex;
 	pthread_mutex_t	print;
-	struct s_philo	*philos
+	struct s_philo	*philos;
 }	t_table;
 
 typedef enum e_status

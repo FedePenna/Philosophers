@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fepennar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: federico-pennarola <federico-pennarola@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:18:55 by fepennar          #+#    #+#             */
-/*   Updated: 2025/05/07 14:18:56 by fepennar         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:18:49 by federico-pe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 		return (printf("ERROR: invalid arguments, dipshit\n"));
 	if (check_arg(av) == 0)
 		return (0);
-	if (init_data(&table, ac, av) == 0)
+	if (init_table(&table, ac, av) == 0)
 		return (0);
 	if (ft_atoi(av[1]) == 1)
 	{
@@ -50,4 +50,5 @@ int	main(int ac, char **av)
 		cleanup(&table);
 		return (0);
 	}
+	sim_start(&table);
 }

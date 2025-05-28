@@ -21,7 +21,7 @@ static void	init_philos(t_table *table)
 		table->philos[i].philo_id = i + 1;
 		table->philos[i].eaten_meals = 0;
 		table->philos[i].last_meal = 0;
-		table->philos[i].data = table;
+		table->philos[i].table = table;
 		table->philos[i].fork_left = &table->forks[i];
 		table->philos[i].fork_right = &table->forks[(i + 1) % table->ph_num];
 		i++;
@@ -49,7 +49,7 @@ static int	init_mutexes(t_table *table)
 	return (0);
 }
 
-int	init_data(t_table *table, int ac, char **av)
+int	init_table(t_table *table, int ac, char **av)
 {
 	table->ph_num = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
