@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void    *phroutine(vodi *arg)
+void    *phroutine(void *arg)
 {
     t_philo         *philo;
     pthread_mutex_t *first;
