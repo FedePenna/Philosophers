@@ -1,4 +1,9 @@
-SRC			=	
+SRC			=	init.c\
+	libutils.c\
+	main.c\
+	monitor.c\
+	philo.c\
+	utils.c\
 
 OBJS_DIR	=	objs/
 
@@ -6,7 +11,7 @@ OBJS		=	$(addprefix $(OBJS_DIR), $(SRC:.c=.o))
 
 NAME		=	philo
 
-CC			=	cc
+CC			=	gcc
 
 CFLAGS		=	-Wall -Wextra -Werror -pthread -gdwarf-4
 
@@ -36,7 +41,4 @@ re:				fclean all
 
 all:			$(NAME)
 
-norm:
-				@norminette $(SRCS) $(SRCS_DIR)pipex.h
-
-.PHONY:			all clean fclean re norm test
+.PHONY:			all clean fclean re test

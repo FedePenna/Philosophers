@@ -8,17 +8,17 @@ long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-static void	init_philos(t_table *table)
+static int	init_philos(t_table *table)
 {
 	int	i;
 
 	i = 0;
 	table->philos = malloc(sizeof(t_philo) * table->ph_num);
 	if (!table->philos)
-		return ;
+		return (1);
 	while (i < table->ph_num)
 	{
-		table->philos[i].philo_id = i + 1;
+		table->philos[i].id = i + 1;
 		table->philos[i].eaten_meals = 0;
 		table->philos[i].last_meal = 0;
 		table->philos[i].table = table;
@@ -26,6 +26,7 @@ static void	init_philos(t_table *table)
 		table->philos[i].fork_right = &table->forks[(i + 1) % table->ph_num];
 		i++;
 	}
+	return (0);
 }
 
 static int	init_mutexes(t_table *table)

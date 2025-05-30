@@ -23,7 +23,7 @@ int	check_arg(char **av)
 	{
 		while (av[i][j])
 		{
-			if (ft_isnumber(av[i]) == 0)
+			if (ft_isnumber(*av[i]) == 0)
 				return (0);
 			j++;
 		}
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 		printf("0 1 has taken a fork\n");
 		usleep(ft_atoi(av[2]));
 		printf("%d 1 died\n", ft_atoi(av[2]));
-		cleanup(&table);
+		//cleanup(&table);
 		return (0);
 	}
 	sim_start(&table);
