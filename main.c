@@ -20,7 +20,7 @@ void	cleanup(t_table *table)
 	{
 		i = 0;
 		while (i < table->ph_num)
-			pthread_mutex_destroy(&table[i++]);
+			pthread_mutex_destroy(&table->forks[i++]);
 		free(table->forks);
 	}
 	if (table->philos)

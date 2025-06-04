@@ -14,7 +14,7 @@ static int	philo_eat(t_philo *philo, pthread_mutex_t *first,
     philo->last_meal = get_time();
     pthread_mutex_unlock(&philo->table->dead_mutex);
     print_action(philo, "is eating");
-    smart_sleep(philo->table->bedtime, philo->table);
+    smart_sleep(philo->table->time_to_die, philo->table);
     philo->eaten_meals++;
     pthread_mutex_unlock(second);
     pthread_mutex_unlock(first);
@@ -50,7 +50,7 @@ void	*phroutine(void *arg)
 		if (!philo_eat(philo, first, second))
 			break ;
 		print_action(philo, "is sleeping");
-		smart_sleep(philo->table->bedtime, philo->table);
+		smart_sleep(philo->table->time_to_die, philo->table);
 	}
 	return (NULL);
 }

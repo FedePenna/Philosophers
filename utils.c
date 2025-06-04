@@ -36,14 +36,14 @@ void    print_action(t_philo *philo, const char *action)
 void    sort_fork(t_philo *philo, pthread_mutex_t **first,
     pthread_mutex_t **second)
 {
-    if (philo->id < (philo->id + 1) % philo->table->ph_num)
-    {
-        *first = philo->fork_left;
-        *second = philo->fork_right;
-    }
-    else
+    if (philo->id % 2 == 0)
     {
         *first = philo->fork_right;
         *second = philo->fork_left;
+    }
+    else
+    {
+        *first = philo->fork_left;
+        *second = philo->fork_right;
     }
 }

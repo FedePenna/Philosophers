@@ -1,6 +1,5 @@
 #ifndef PHILO_H
 # define PHILO_H
-
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -40,7 +39,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	t_table			*table;
 }					t_philo;
-
 int					ft_atoi(const char *str);
 int					ft_isnumber(char *str);
 int					check_arg(char **av);
