@@ -12,43 +12,51 @@
 
 #include "philo.h"
 
-int	check_arg(char **av)
+void	cleanup(t_table *table)
 {
 	int	i;
-	int	j;
 
-	i = 0;
-	j = 0;
-	while(av[i])
+	if (table->forks)
 	{
-		while (av[i][j])
-		{
-			if (ft_isnumber(*av[i]) == 0)
-				return (0);
-			j++;
-		}
-		i++;
+		i = 0;
+		while (i < table->ph_num)
+			pthread_mutex_destroy(&table[i++]);
+		free(table->forks);
 	}
-	return (1);
+	if (table->philos)
+		free(table->philos);
+	pthread_mutex_destroy(&table->print);
+	pthread_mutex_destroy(&table->dead_mutex);
 }
 
 int	main(int ac, char **av)
 {
 	t_table	table;
+//	int	n_philo;
+	int	i;
 
+	i = 1;
 	if (ac != 5 && ac != 6)
 		return (printf("ERROR: invalid arguments, dipshit\n"));
-	if (check_arg(av) == 0)
+	while (i < ac)
+	{
+		if (!ft_isnumber(av[i]))
+			return (0);
+		i++;
+	}
+	if (init_table(&table, ac, av) == -1)
 		return (0);
-	if (init_table(&table, ac, av) == 0)
-		return (0);
+//	n_philo = ft_atoi(av[1]);
+//	printf("%d\n", n_philo);
 	if (ft_atoi(av[1]) == 1)
 	{
 		printf("0 1 has taken a fork\n");
 		usleep(ft_atoi(av[2]));
 		printf("%d 1 died\n", ft_atoi(av[2]));
-		//cleanup(&table);
+		cleanup(&table);
 		return (0);
 	}
 	sim_start(&table);
+	cleanup(&table);
+	return (0);
 }

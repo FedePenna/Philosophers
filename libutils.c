@@ -1,33 +1,42 @@
 #include "philo.h"
 
-int	ft_isnumber(char c)
+static int	ft_isdigit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
+int	ft_isnumber(char *str)
+{
+	if (!str || !*str)
+		return (0);
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 int	ft_atoi(const char *str)
 {
-	long	n;
-	int	sign;
-	int	i;
+	long	num;
+	int		sign;
 
-	n = 0;
+	num = 0;
 	sign = 1;
-	i = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			sign = -1;
+	while (*str >= '0' && *str <= '9')
 	{
-		if (str[i] == '-')
-			sign = sign * -1;
-		i++;
+		num = num * 10 + (*str++ - '0');
+		if ((sign == 1 && num > INT_MAX) || (sign == -1 && -num < INT_MIN))
+			return (0);
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		n = n * 10 + (str[i] - 48);
-		i++;
-	}
-	if (n > INT_MAX || n < INT_MIN)
-		return (-1);
-	return (n * sign);
+	return ((int)(num * sign));
 }

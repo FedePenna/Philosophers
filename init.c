@@ -41,7 +41,7 @@ static int	init_mutexes(t_table *table)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 			return (1);
-		i++;	
+		i++;
 	}
 	if (pthread_mutex_init(&table->print, NULL) != 0)
 		return (1);
@@ -56,15 +56,21 @@ int	init_table(t_table *table, int ac, char **av)
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->bedtime = ft_atoi(av[4]);
-	if (ac == 6)
+	if (av[5] && ac == 6)
+	{
 		table->max_eat = ft_atoi(av[5]);
+		if (table->max_eat < 0)
+			return (-1);
+	}		
+	else
+		table->max_eat = -1;
 	table->all_ate = 0;
 	table->dead = 0;
 	if (table->ph_num <= 0 ||table->time_to_die < 0 || table->time_to_eat < 0
-		|| table->bedtime < 0 || (ac == 6 && table->max_eat <= 0))
-		return (1);
+		|| table->bedtime < 0 || (ac == 6 && table->max_eat == 0))
+		return (-1);
 	if (init_mutexes(table) == 1)
-		return (1);
+		return (-1);
 	init_philos(table);
 	table->tstart = get_time();
 	return (0);

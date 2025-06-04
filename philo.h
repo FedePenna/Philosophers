@@ -42,7 +42,7 @@ typedef struct s_philo
 }					t_philo;
 
 int					ft_atoi(const char *str);
-int					ft_isnumber(char c);
+int					ft_isnumber(char *str);
 int					check_arg(char **av);
 int					main(int ac, char **av);
 int					init_table(t_table *table, int ac, char **av);
