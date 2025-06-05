@@ -58,18 +58,12 @@ int	init_table(t_table *table, int ac, char **av)
 	table->time_to_eat = ft_atoi(av[3]);
 	table->bedtime = ft_atoi(av[4]);
 	if (av[5] && ac == 6)
-	{
 		table->max_eat = ft_atoi(av[5]);
-		if (table->max_eat < 0)
-			return (-1);
-	}		
-	else
-		table->max_eat = -1;
 	table->all_ate = 0;
 	table->dead = 0;
-	/* if (table->ph_num <= 0 ||table->time_to_die < 0 || table->time_to_eat < 0
-		|| table->bedtime < 0 || (ac == 6 && table->max_eat == 0))
-		return (-1); */
+	if (table->ph_num <= 0 ||table->time_to_die < 0 || table->time_to_eat < 0
+		|| table->bedtime < 0 || table->max_eat <= 0)
+		return (-1);
 	if (init_mutexes(table) == 1)
 		return (-1);
 	if (init_philos(table) == 1)
