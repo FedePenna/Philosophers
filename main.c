@@ -16,11 +16,14 @@ void	cleanup(t_table *table)
 {
 	int	i;
 
+	i = 0;
 	if (table->forks)
 	{
-		i = 0;
 		while (i < table->ph_num)
-			pthread_mutex_destroy(&table->forks[i++]);
+		{
+			pthread_mutex_destroy(&table->forks[i]);
+			i++;
+		}
 		free(table->forks);
 	}
 	if (table->philos)
@@ -48,11 +51,11 @@ int	main(int ac, char **av)
 		return (0);
 //	n_philo = ft_atoi(av[1]);
 //	printf("%d\n", n_philo);
-	if (ft_atoi(av[1]) == 1)
+	if (table.ph_num == 1)
 	{
 		printf("0 1 has taken a fork\n");
-		usleep(ft_atoi(av[2]));
-		printf("%d 1 died\n", ft_atoi(av[2]));
+		smart_sleep(table.time_to_die, &table);
+		printf("%ld 1 died\n", table.time_to_die);
 		cleanup(&table);
 		return (0);
 	}

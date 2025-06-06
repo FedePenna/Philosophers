@@ -30,13 +30,17 @@ int	ft_atoi(const char *str)
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-' || *str == '+')
-		if (*str++ == '-')
+	{
+		if (*str == '-')
 			sign = -1;
+		str++;
+	}
 	while (*str >= '0' && *str <= '9')
 	{
-		num = num * 10 + (*str++ - '0');
+		num = num * 10 + (*str - '0');
 		if ((sign == 1 && num > INT_MAX) || (sign == -1 && -num < INT_MIN))
 			return (0);
+		str++;
 	}
 	return ((int)(num * sign));
 }

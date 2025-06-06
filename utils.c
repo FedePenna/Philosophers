@@ -20,17 +20,21 @@ void smart_sleep(long time_in_ms, t_table *table)
 
 void    print_action(t_philo *philo, const char *action)
 {
-    long    time;
+    long    time_now;
+    t_table *table;
 
-    pthread_mutex_lock(&philo->table->print);
+    table = philo->table;
     pthread_mutex_lock(&philo->table->dead_mutex);
-    if (!philo->table->dead)
+    if (table->dead)
     {
-        time = get_time() - philo->table->tstart;
-        printf("%ld philo %d %s\n", time, philo->id, action);
+        pthread_mutex_unlock(&table->dead_mutex);
+        return;
     }
-    pthread_mutex_unlock(&philo->table->print);
-    pthread_mutex_unlock(&philo->table->dead_mutex);
+    time_now = get_time() - table->tstart;
+    pthread_mutex_unlock(&table->dead_mutex);
+    pthread_mutex_lock(&table->print);
+    printf("%ld philo %d %s\n", time_now, philo->id, action);
+    pthread_mutex_unlock(&table->print);
 }
 
 void    sort_fork(t_philo *philo, pthread_mutex_t **first,

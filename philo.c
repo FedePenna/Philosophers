@@ -3,19 +3,24 @@
 static int	philo_eat(t_philo *philo, pthread_mutex_t *first,
 		pthread_mutex_t *second)
 {
-    pthread_mutex_lock(&philo->table->dead_mutex);
-    if (philo->table->dead || philo->table->all_ate)
+    t_table	*table;
+	
+	table = philo->table;
+	pthread_mutex_lock(&table->dead_mutex);
+    if (table->dead || table->all_ate)
     {
         pthread_mutex_unlock(second);
         pthread_mutex_unlock(first);
-        pthread_mutex_unlock(&philo->table->dead_mutex);
+        pthread_mutex_unlock(&table->dead_mutex);
         return (0);
     }
     philo->last_meal = get_time();
-    pthread_mutex_unlock(&philo->table->dead_mutex);
+    pthread_mutex_unlock(&table->dead_mutex);
     print_action(philo, "is eating");
-    smart_sleep(philo->table->time_to_die, philo->table);
+    smart_sleep(table->time_to_die, philo->table);
+	pthread_mutex_lock(&table->dead_mutex);
     philo->eaten_meals++;
+	pthread_mutex_unlock(&table->dead_mutex);
     pthread_mutex_unlock(second);
     pthread_mutex_unlock(first);
     return (1);
@@ -23,9 +28,14 @@ static int	philo_eat(t_philo *philo, pthread_mutex_t *first,
 static int  philo_check_running(t_philo *philo)
 {
 	int	running;
-
+	t_table *table;
+	
+	table = philo->table;
 	pthread_mutex_lock(&philo->table->dead_mutex);
-	running = (!philo->table->dead && !philo->table->all_ate);
+	if (table->dead || table->all_ate)
+		running = 0;
+	else
+		running = 1;
 	pthread_mutex_unlock(&philo->table->dead_mutex);
 	return (running);
 }
