@@ -35,7 +35,6 @@ void	cleanup(t_table *table)
 int	main(int ac, char **av)
 {
 	t_table	table;
-//	int	n_philo;
 	int	i;
 
 	i = 1;
@@ -44,13 +43,11 @@ int	main(int ac, char **av)
 	while (i < ac)
 	{
 		if (!ft_isnumber(av[i]))
-			return (0);
+			return (printf("ERROR: invalid argument %s, dipshit\n", av[i]));
 		i++;
 	}
 	if (init_table(&table, ac, av) == -1)
 		return (0);
-//	n_philo = ft_atoi(av[1]);
-//	printf("%d\n", n_philo);
 	if (table.ph_num == 1)
 	{
 		printf("0 1 has taken a fork\n");

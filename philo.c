@@ -17,7 +17,7 @@ static int	philo_eat(t_philo *philo, pthread_mutex_t *first,
     philo->last_meal = get_time();
     pthread_mutex_unlock(&table->dead_mutex);
     print_action(philo, "is eating");
-    smart_sleep(table->time_to_die, philo->table);
+    smart_sleep(table->time_to_eat, table);
 	pthread_mutex_lock(&table->dead_mutex);
     philo->eaten_meals++;
 	pthread_mutex_unlock(&table->dead_mutex);
@@ -31,7 +31,7 @@ static int  philo_check_running(t_philo *philo)
 	t_table *table;
 	
 	table = philo->table;
-	pthread_mutex_lock(&philo->table->dead_mutex);
+	pthread_mutex_lock(&table->dead_mutex);
 	if (table->dead || table->all_ate)
 		running = 0;
 	else
@@ -48,10 +48,9 @@ void	*phroutine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		smart_sleep(philo->table->time_to_eat, philo->table);
 	while (philo_check_running(philo))
 	{
-		print_action(philo, "is thinking");
 		sort_fork(philo, &first, &second);
 		pthread_mutex_lock(first);
 		print_action(philo, "has taken a fork");
@@ -60,7 +59,9 @@ void	*phroutine(void *arg)
 		if (!philo_eat(philo, first, second))
 			break ;
 		print_action(philo, "is sleeping");
-		smart_sleep(philo->table->time_to_die, philo->table);
+		smart_sleep(philo->table->bedtime, philo->table);
+		print_action(philo, "is thinking");
+		usleep(1);
 	}
 	return (NULL);
 }
@@ -87,7 +88,10 @@ void	sim_start(t_table *table)
 		return ;
 	}
 	pthread_detach(monitor_thread);
-	i = -1;
-	while (++i < table->ph_num)
+	i = 0;
+	while (i < table->ph_num)
+	{	
 		pthread_join(table->philos[i].thread, NULL);
+		i++;
+	}
 }

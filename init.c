@@ -15,10 +15,10 @@ static int	init_philos(t_table *table)
 {
 	int	i;
 
-	i = 0;
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->ph_num);
 	if (!table->philos)
 		return (1);
+	i = 0;
 	while (i < table->ph_num)
 	{
 		table->philos[i].id = i + 1;
@@ -36,11 +36,12 @@ static int	init_mutexes(t_table *table)
 {
 	int	i;
 
-	i = 0;
+	
 	table->forks = (pthread_mutex_t *)
 		malloc(sizeof(pthread_mutex_t) * table->ph_num);
 	if (!table->forks)
 		return (1);
+	i = 0;
 	while (i < table->ph_num)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)

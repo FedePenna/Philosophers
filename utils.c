@@ -5,7 +5,7 @@ void smart_sleep(long time_in_ms, t_table *table)
 	long	start;
 
 	start = get_time();
-	while ((get_time() - start) < time_in_ms)
+	while (get_time() - start < time_in_ms)
 	{
 		pthread_mutex_lock(&table->dead_mutex);
 		if (table->dead)
