@@ -16,7 +16,7 @@ static int	init_philos(t_table *table)
 	int	i;
 
 	i = 0;
-	table->philos = malloc(sizeof(t_philo) * table->ph_num);
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->ph_num);
 	if (!table->philos)
 		return (1);
 	while (i < table->ph_num)
@@ -37,7 +37,8 @@ static int	init_mutexes(t_table *table)
 	int	i;
 
 	i = 0;
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->ph_num);
+	table->forks = (pthread_mutex_t *)
+		malloc(sizeof(pthread_mutex_t) * table->ph_num);
 	if (!table->forks)
 		return (1);
 	while (i < table->ph_num)
@@ -63,10 +64,12 @@ int	init_table(t_table *table, int ac, char **av)
 	table->bedtime = ft_atoi(av[4]);
 	if (ac == 6)
 		table->max_eat = ft_atoi(av[5]);
+	else 
+		table->max_eat = -1;
 	table->all_ate = 0;
 	table->dead = 0;
 	if (table->ph_num <= 0 ||table->time_to_die <= 0 || table->time_to_eat <= 0
-		|| table->bedtime <= 0 || table->max_eat <= 0)
+		|| table->bedtime <= 0 || (ac == 6 && table->max_eat <= 0))
 		return (-1);
 	if (init_mutexes(table) == 1)
 		return (-1);

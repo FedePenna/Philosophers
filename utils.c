@@ -24,7 +24,7 @@ void    print_action(t_philo *philo, const char *action)
     t_table *table;
 
     table = philo->table;
-    pthread_mutex_lock(&philo->table->dead_mutex);
+    pthread_mutex_lock(&table->dead_mutex);
     if (table->dead)
     {
         pthread_mutex_unlock(&table->dead_mutex);

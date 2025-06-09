@@ -73,7 +73,6 @@ void	sim_start(t_table *table)
 	i = 0;
 	while (i < table->ph_num)
 	{
-		table->philos[i].last_meal = get_time();
 		if (pthread_create(&table->philos[i].thread, NULL, phroutine,
             &table->philos[i]) != 0)
         {
