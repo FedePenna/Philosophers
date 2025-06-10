@@ -33,7 +33,7 @@ static int	init_philos(t_table *table)
 	i = 0;
 	while (i < table->ph_num)
 	{
-		table->philos[i].id = i + 1;
+		table->philos[i].id = i;
 		table->philos[i].eaten_meals = 0;
 		table->philos[i].last_meal = 0;
 		table->philos[i].table = table;

@@ -74,7 +74,7 @@ void	*phroutine(void *arg)
 		print_action(philo, "is sleeping");
 		smart_sleep(philo->table->bedtime, philo->table);
 		print_action(philo, "is thinking");
-		usleep(1);
+		usleep(1000);
 	}
 	return (NULL);
 }

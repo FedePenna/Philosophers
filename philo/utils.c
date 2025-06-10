@@ -45,7 +45,7 @@ void	print_action(t_philo *philo, const char *action)
 	time_now = get_time() - table->tstart;
 	pthread_mutex_unlock(&table->dead_mutex);
 	pthread_mutex_lock(&table->print);
-	printf("%ld philo %d %s\n", time_now, philo->id, action);
+	printf("%ld %d %s\n", time_now, philo->id, action);
 	pthread_mutex_unlock(&table->print);
 }
 
